@@ -2,9 +2,9 @@
 import yt_dlp
 import cv2
 
-# video_url = "https://www.youtube.com/watch?v=z_fY1pj1VBw"
-# video_url = "https://www.youtube.com/watch?v=C03Itx8iSC0"
-video_url = "https://www.youtube.com/watch?v=YYiid3jUUQE"
+video_url = "https://www.youtube.com/watch?v=z_fY1pj1VBw" #Taipei
+# video_url = "https://www.youtube.com/watch?v=C03Itx8iSC0" #Kaohsiung
+# video_url = "https://www.youtube.com/watch?v=YYiid3jUUQE" #US
 ydl_opts = {'format': 'best',  'quiet': True }
 with yt_dlp.YoutubeDL(ydl_opts) as ydl:
     info_dict = ydl.extract_info(video_url, download=False)
