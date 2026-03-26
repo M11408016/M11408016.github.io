@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>豪華炫彩手部追蹤 | M11408016</title>
+  <style>
+    :root {
+      --primary: #ff007f;
+      --secondary: #00f2ff;
+      --bg: #0f172a;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg);
+      font-family: 'Outfit', -apple-system, sans-serif;
+      color: white;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    #container {
+      position: relative;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 24px;
+      padding: 20px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      line-height: 0;
+    }
+
+    canvas {
+      border-radius: 12px;
+      transform: scaleX(-1);
+      /* 鏡像顯示 */
+    }
+
+    video {
+      display: none;
+    }
+
+    #ui {
+      position: absolute;
+      top: 40px;
+      left: 40px;
+      pointer-events: none;
+    }
+
+    .card {
+      background: rgba(15, 23, 42, 0.7);
+      border: 2px solid var(--secondary);
+      border-radius: 16px;
+      padding: 10px 25px;
+      box-shadow: 0 0 20px var(--secondary);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% {
+        box-shadow: 0 0 10px var(--secondary);
+      }
+
+      50% {
+        box-shadow: 0 0 30px var(--secondary);
+      }
+
+      100% {
+        box-shadow: 0 0 10px var(--secondary);
+      }
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 2.5rem;
+      background: linear-gradient(45deg, var(--secondary), var(--primary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 800;
+    }
+
+    .score-board {
+      margin-top: 10px;
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #fff;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="container">
+    <div id="ui">
+      <div class="card">
+        <h1 id="score">SCORE: 0</h1>
+      </div>
+      <div style="margin-top:15px; font-size: 0.9rem; color: #94a3b8; font-weight: 600;">
+        M11408016 | 小指尖碰方塊得分!
+      </div>
+    </div>
+    <video id="webcam" autoplay playsinline></video>
+    <canvas id="canvas"></canvas>
+  </div>
+
+  <!-- MediaPipe Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
+
+  <script>
+    const videoElement = document.getElementById('webcam');
+    const canvasElement = document.getElementById('canvas');
+    const canvasCtx = canvasElement.getContext('2d');
+    const scoreElement = document.getElementById('score');
+
+    let score = 0;
+    let boxX = 300, boxY = 200, boxSize = 100;
+    let boxColor = `hsl(${Math.random() * 360}, 70%, 60%)`;
+
+    function resetBox() {
+      boxX = Math.random() * (canvasElement.width - boxSize);
+      boxY = Math.random() * (canvasElement.height - boxSize);
+      boxColor = `hsl(${Math.random() * 360}, 80%, 70%)`;
+      score++;
+      scoreElement.innerText = `SCORE: ${score - 1}`; // 初始不算分
+    }
+
+    function onResults(results) {
+      canvasCtx.save();
+      canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
+      canvasCtx.drawImage(results.image, 0, 0, canvasElement.width, canvasElement.height);
+
+      // 繪製彩色感應盒
+      canvasCtx.lineWidth = 8;
+      canvasCtx.strokeStyle = boxColor;
+      canvasCtx.strokeRect(boxX, boxY, boxSize, boxSize);
+      canvasCtx.lineWidth = 2;
+      canvasCtx.strokeStyle = 'white';
+      canvasCtx.strokeRect(boxX + 4, boxY + 4, boxSize - 8, boxSize - 8);
+
+      if (results.multiHandLandmarks) {
+        for (const landmarks of results.multiHandLandmarks) {
+          // 1. 畫彩色連線
+          for (let i = 0; i < HAND_CONNECTIONS.length; i++) {
+            const conn = HAND_CONNECTIONS[i];
+            const from = landmarks[conn[0]];
+            const to = landmarks[conn[1]];
+            const hue = (conn[0] * 15) % 360;
+            canvasCtx.beginPath();
+            canvasCtx.moveTo(from.x * canvasElement.width, from.y * canvasElement.height);
+            canvasCtx.lineTo(to.x * canvasElement.width, to.y * canvasElement.height);
+            canvasCtx.strokeStyle = `hsla(${hue}, 80%, 60%, 0.6)`;
+            canvasCtx.lineWidth = 6;
+            canvasCtx.lineCap = 'round';
+            canvasCtx.stroke();
+          }
+
+          // 2. 畫每個夢幻彩色節點
+          landmarks.forEach((lm, index) => {
+            const x = lm.x * canvasElement.width;
+            const y = lm.y * canvasElement.height;
+            const hue = (index * 17) % 360;
+
+            if (index === 20) { // 小指尖雙大圈
+              // 標靶效果
+              canvasCtx.beginPath();
+              canvasCtx.arc(x, y, 25, 0, 2 * Math.PI);
+              canvasCtx.strokeStyle = `hsl(${hue}, 100%, 70%)`;
+              canvasCtx.lineWidth = 4;
+              canvasCtx.stroke();
+
+              canvasCtx.beginPath();
+              canvasCtx.arc(x, y, 35, 0, 2 * Math.PI);
+              canvasCtx.strokeStyle = 'white';
+              canvasCtx.lineWidth = 2;
+              canvasCtx.stroke();
+
+              // 偵測碰撞 (由於畫布翻轉，這裡需要鏡像處理偵測座標)
+              const reversedX = canvasElement.width - x;
+              if (reversedX > boxX && reversedX < boxX + boxSize && y > boxY && y < boxY + boxSize) {
+                resetBox();
+              }
+            }
+
+            // 基本彩色節點 (外白內彩)
+            canvasCtx.beginPath();
+            canvasCtx.arc(x, y, 8, 0, 2 * Math.PI);
+            canvasCtx.fillStyle = 'white';
+            canvasCtx.fill();
+
+            canvasCtx.beginPath();
+            canvasCtx.arc(x, y, 6, 0, 2 * Math.PI);
+            canvasCtx.fillStyle = `hsl(${hue}, 80%, 60%)`;
+            canvasCtx.fill();
+
+            // 閃亮點
+            canvasCtx.beginPath();
+            canvasCtx.arc(x - 2, y - 2, 2, 0, 2 * Math.PI);
+            canvasCtx.fillStyle = 'rgba(255,255,255,0.8)';
+            canvasCtx.fill();
+          });
+        }
+      }
+      canvasCtx.restore();
+    }
+
+    const hands = new Hands({
+      locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`
+    });
+
+    hands.setOptions({
+      maxNumHands: 2,
+      modelComplexity: 1,
+      minDetectionConfidence: 0.6,
+      minTrackingConfidence: 0.6
+    });
+
+    hands.onResults(onResults);
+
+    const camera = new Camera(videoElement, {
+      onFrame: async () => {
+        await hands.send({ image: videoElement });
+      },
+      width: 800,
+      height: 600
+    });
+
+    function startCamera() {
+      canvasElement.width = 800;
+      canvasElement.height = 600;
+      camera.start();
+    }
+
+    window.onload = startCamera;
+  </script>
+</body>
+
+</html>
