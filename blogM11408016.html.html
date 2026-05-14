@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NMIXX 世界巡演全紀錄 | 現代感部落格</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Noto+Sans+TC:wght@300;400;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            black: '#0a0a0c',
+                            deep: '#121214',
+                            accent: '#6366f1', // Indigo
+                            vibrant: '#a855f7', // Purple
+                            soft: '#f8fafc'
+                        }
+                    },
+                    fontFamily: {
+                        display: ['Outfit', 'Noto Sans TC', 'sans-serif'],
+                        body: ['Noto Sans TC', 'sans-serif']
+                    },
+                    animation: {
+                        'gradient-x': 'gradient-x 15s ease infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                        'fade-up': 'fadeUp 0.8s ease-out forwards'
+                    },
+                    keyframes: {
+                        'gradient-x': {
+                            '0%, 100%': { 'background-position': '0% 50%' },
+                            '50%': { 'background-position': '100% 50%' }
+                        },
+                        'float': {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' }
+                        },
+                        'fadeUp': {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #0a0a0c;
+            color: #f8fafc;
+            overflow-x: hidden;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #a855f7 0%, #6366f1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .bento-item {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .bento-item:hover {
+            transform: translateY(-5px);
+            border-color: rgba(99, 102, 241, 0.5);
+            background: rgba(255, 255, 255, 0.05);
+        }
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        .scroll-reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="font-body">
+
+    <!-- Header / Banner Section -->
+    <header class="relative min-h-screen flex items-center justify-center overflow-hidden">
+        <!-- Background decorative elements -->
+        <div class="absolute top-0 left-0 w-full h-full z-0">
+            <div class="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-brand-accent/20 blur-[120px] rounded-full animate-pulse"></div>
+            <div class="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-brand-vibrant/20 blur-[120px] rounded-full animate-pulse" style="animation-delay: 2s;"></div>
+        </div>
+
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="flex flex-col lg:flex-row items-center gap-12">
+                <div class="w-full lg:w-1/2 space-y-6 animate-fade-up">
+                    <div class="inline-block px-4 py-1.5 bg-brand-accent/10 border border-brand-accent/30 rounded-full text-brand-accent text-sm font-semibold tracking-wider uppercase">
+                        Featured Music Insight
+                    </div>
+                    <h1 class="text-5xl md:text-7xl font-display font-extrabold leading-tight">
+                        重點必看！<br/>
+                        <span class="gradient-text">NMIXX 世界巡演</span><br/>
+                        全紀錄
+                    </h1>
+                    <p class="text-xl text-gray-400 font-light max-w-xl leading-relaxed">
+                        當「吞 CD」女團闖蕩全球，她們帶給世界的究竟是娛樂產品，還是一場震撼心靈的音樂實驗？
+                    </p>
+                    <div class="flex items-center gap-4 pt-4">
+                        <div class="w-12 h-12 rounded-full bg-gradient-to-tr from-brand-accent to-brand-vibrant flex items-center justify-center font-bold">M</div>
+                        <div>
+                            <p class="font-semibold">M11408016</p>
+                            <p class="text-sm text-gray-500">Music Culture Observer</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="w-full lg:w-1/2 relative group">
+                    <div class="absolute inset-0 bg-gradient-to-tr from-brand-accent to-brand-vibrant blur-3xl opacity-20 group-hover:opacity-40 transition-opacity duration-500"></div>
+                    <div class="relative rounded-3xl overflow-hidden border border-white/10 shadow-2xl animate-float">
+                        <img src='https://opal.google/board/blobs/8681bdec-b717-4c4d-9b99-9415f9eb0a5f' alt='NMIXX Showcase Banner' class="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce">
+            <svg class="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+        </div>
+    </header>
+
+    <!-- Main Content Section -->
+    <main class="container mx-auto px-6 py-24">
+        
+        <!-- Intro Text -->
+        <section class="max-w-4xl mx-auto mb-32 scroll-reveal">
+            <p class="text-2xl md:text-3xl font-light leading-relaxed text-gray-300 italic">
+                「在當代 K-pop 的紅海中，我們時常討論偶像的『人設』與『流量』，但鮮少有一組團體能像 <span class="text-white font-semibold">NMIXX</span> 一樣，讓評論界的焦點回歸到最純粹的表演實力上。」
+            </p>
+        </section>
+
+        <!-- Bento Grid Content -->
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-6 auto-rows-min">
+            
+            <!-- Chapter 1: The Show -->
+            <div class="md:col-span-8 glass-card p-8 md:p-12 bento-item flex flex-col justify-between scroll-reveal">
+                <div>
+                    <span class="text-brand-accent font-display font-bold text-4xl mb-4 block">01</span>
+                    <h2 class="text-3xl font-display font-bold mb-6">這場「秀」很不一樣！NMIXX 巡演懶人包</h2>
+                    <div class="space-y-4 text-gray-400 leading-loose">
+                        <p>2023 年，NMIXX 開啟了她們的首個全球巡迴活動「NICE TO MIXX YOU」。雖然官方定義為「Showcase Tour」，但完成度早已跨越門檻，直逼正式演唱會規格。</p>
+                        <p>從《expergo》的神曲到震撼感官的〈O.O〉與〈DICE〉，曲目層次分明。翻唱同門學姐 TWICE 與 ITZY 的作品，展現了強大適應力。橫跨西雅圖、洛杉磯到曼谷、台北、香港，這是 NMIXX 向世界遞出的閃亮名片。</p>
+                    </div>
+                </div>
+                <div class="mt-8 pt-8 border-t border-white/5 flex gap-2">
+                    <span class="px-3 py-1 bg-white/5 rounded-full text-xs text-gray-400">#NICE_TO_MIXX_YOU</span>
+                    <span class="px-3 py-1 bg-white/5 rounded-full text-xs text-gray-400">#GlobalTour</span>
+                </div>
+            </div>
+
+            <!-- Chapter 2: Growth -->
+            <div class="md:col-span-4 glass-card p-8 bento-item scroll-reveal" style="transition-delay: 0.1s;">
+                <span class="text-brand-vibrant font-display font-bold text-4xl mb-4 block">02</span>
+                <h2 class="text-2xl font-display font-bold mb-6">回首過去：這條路走來可不容易...</h2>
+                <div class="space-y-4 text-gray-400 leading-relaxed text-sm">
+                    <p>每個閃耀瞬間背後都有成長史。2022 年出道之際，全球仍籠罩在疫情餘波中，早期的她們只能隔著螢幕或口罩交流。</p>
+                    <p>更巨大的轉折是成員 Jinni 的突發退團，讓團體陷入重組陣痛期。這場巡演是 6 人體制的「默契大考」。所幸〈Love Me Like This〉的逆襲，成為了這場巡演順利成行的及時雨。</p>
+                </div>
+            </div>
+
+            <!-- Chapter 3: Performance -->
+            <div class="md:col-span-12 lg:col-span-6 bg-gradient-to-br from-brand-accent to-brand-vibrant rounded-[32px] p-10 shadow-xl scroll-reveal" style="transition-delay: 0.2s;">
+                <div class="flex flex-col h-full">
+                    <div class="mb-auto">
+                        <span class="text-white/60 font-display font-bold text-4xl mb-4 block">03</span>
+                        <h2 class="text-3xl font-display font-bold mb-6 text-white">現在全世界都在聊什麼？<br/>「吞 CD 女團」的震撼！</h2>
+                        <p class="text-white/80 leading-relaxed mb-6">
+                            在對嘴盛行的時代，NMIXX 堅持「全開麥」實力。Lily 與 Haewon 的高音具備穿透耳膜的生命力，讓觀眾感嘆這絕對是「吞了 CD」。曾經毀譽參半的「MIXX POP」曲風，在現場音響系統下展現了其獨特的結構美感，變奏時的衝擊力讓現場瞬間沸騰。
+                        </p>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-black/20 backdrop-blur-md p-4 rounded-2xl border border-white/10">
+                            <p class="text-xs text-white/60 uppercase mb-1 tracking-widest">Vocal Power</p>
+                            <p class="text-xl font-bold">100% Live</p>
+                        </div>
+                        <div class="bg-black/20 backdrop-blur-md p-4 rounded-2xl border border-white/10">
+                            <p class="text-xs text-white/60 uppercase mb-1 tracking-widest">Energy</p>
+                            <p class="text-xl font-bold">Limitless</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chapter 4: Real Voices -->
+            <div class="md:col-span-12 lg:col-span-6 glass-card p-10 bento-item scroll-reveal" style="transition-delay: 0.3s;">
+                <span class="text-gray-500 font-display font-bold text-4xl mb-4 block">04</span>
+                <h2 class="text-3xl font-display font-bold mb-6">真實的聲音：<br/>不僅有掌聲，還有那些「小摩擦」</h2>
+                <div class="space-y-6">
+                    <div class="flex gap-4">
+                        <div class="flex-shrink-0 w-1 bg-brand-accent rounded-full opacity-50"></div>
+                        <p class="text-gray-400">「過勞」的隱憂：密集巡演間隙需應付廣告與頒獎禮，NSWER 們對偶像的疲態感到心疼。</p>
+                    </div>
+                    <div class="flex gap-4">
+                        <div class="flex-shrink-0 w-1 bg-brand-accent rounded-full opacity-50"></div>
+                        <p class="text-gray-400">市場端討論：北美場次場地選擇保守及票價設定策略引發熱議。</p>
+                    </div>
+                    <div class="flex gap-4">
+                        <div class="flex-shrink-0 w-1 bg-brand-accent rounded-full opacity-50"></div>
+                        <p class="text-gray-400">曲目編排：重新編舞配唱早期 7 人時期作品，對老粉絲而言仍是微妙的心理課題。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chapter 5: Future -->
+            <div class="md:col-span-12 glass-card p-12 bento-item relative overflow-hidden scroll-reveal" style="transition-delay: 0.4s;">
+                <div class="relative z-10 flex flex-col md:flex-row items-center gap-12">
+                    <div class="w-full md:w-1/2">
+                        <span class="text-brand-accent font-display font-bold text-4xl mb-4 block">05</span>
+                        <h2 class="text-4xl font-display font-bold mb-8">未來預告片：<br/>NMIXX 的下一站會在哪？</h2>
+                        <p class="text-gray-400 text-lg leading-relaxed mb-8">
+                            隨著《Fe3O4》系列熱銷，NMIXX 的冒險地圖才剛開始。巡演極大機率會從劇院升級為萬人體育館（Arena）。更令人期待的是「MIXXTOPIA」世界觀，未來結合 3D 投影或互動科技，將會是 K-pop 舞台設計的新標竿。
+                        </p>
+                        <button class="px-8 py-4 bg-white text-black font-bold rounded-full hover:bg-brand-accent hover:text-white transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg shadow-white/5">
+                            關注最新動態
+                        </button>
+                    </div>
+                    <div class="w-full md:w-1/2 grid grid-cols-2 gap-4">
+                        <div class="h-40 bg-white/5 rounded-3xl flex flex-col items-center justify-center p-4 text-center">
+                            <span class="text-brand-accent text-3xl font-bold mb-2">Arena</span>
+                            <span class="text-xs text-gray-500">Next Venue Level</span>
+                        </div>
+                        <div class="h-40 bg-white/5 rounded-3xl flex flex-col items-center justify-center p-4 text-center mt-8">
+                            <span class="text-brand-vibrant text-3xl font-bold mb-2">Tech</span>
+                            <span class="text-xs text-gray-500">3D Interactive</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Decorative background text -->
+                <div class="absolute -right-20 -bottom-10 opacity-5 select-none pointer-events-none">
+                    <span class="text-[180px] font-black leading-none uppercase">MIXX</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Conclusion -->
+        <section class="mt-32 max-w-2xl mx-auto text-center scroll-reveal">
+            <div class="mb-8 inline-block p-4 rounded-full bg-brand-deep border border-white/10">
+                <svg class="w-8 h-8 text-brand-accent" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21L14.017 18C14.017 16.8954 13.1216 16 12.017 16L12.017 16C10.9124 16 10.017 16.8954 10.017 18L10.017 21M4.017 21L4.017 18C4.017 16.8954 3.12157 16 2.017 16L2.017 16C0.912423 16 0.0169983 16.8954 0.0169983 18L0.0169983 21M22.017 21L22.017 18C22.017 16.8954 21.1216 16 20.017 16L20.017 16C18.9124 16 18.017 16.8954 18.017 18L18.017 21M12.017 2C6.49415 2 2.017 6.47715 2.017 12C2.017 14.1683 2.70425 16.1758 3.87413 17.8189L12.017 13L20.1599 17.8189C21.3297 16.1758 22.017 14.1683 22.017 12C22.017 6.47715 17.5398 2 12.017 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <h3 class="text-3xl font-display font-bold mb-6">結語</h3>
+            <p class="text-xl text-gray-400 leading-relaxed italic">
+                「NMIXX 的音樂或許不是第一眼就平易近人的大眾流行，但她們用實力證明了『硬核』也能闖出一片天。她們對於舞台的真心與熱情，值得我們親身感受。」
+            </p>
+            <div class="mt-12 text-sm font-bold tracking-[0.2em] uppercase text-gray-600">
+                NMIXX Story Continues...
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Simple scroll reveal animation logic
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
+
